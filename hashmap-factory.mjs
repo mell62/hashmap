@@ -33,8 +33,104 @@ function hashMap() {
     } else {
       buckets[hashedKey].append(itemObj);
     }
-    console.log(buckets[hashedKey].toString());
   }
 
-  return { set };
+  function get(key) {
+    const hashedKey = hash(key);
+    if (!buckets[hashedKey]) {
+      return null;
+    }
+    if (buckets[hashedKey].contains(key)) {
+      const index = buckets[hashedKey].find(key);
+      return buckets[hashedKey].at(index).value.value;
+    }
+    return null;
+  }
+
+  function has(key) {
+    const hashedKey = hash(key);
+    if (!buckets[hashedKey]) {
+      return false;
+    }
+    if (buckets[hashedKey].contains(key)) {
+      return true;
+    }
+    return false;
+  }
+
+  function remove(key) {
+    const hashedKey = hash(key);
+    if (!buckets[hashedKey]) {
+      return false;
+    }
+    if (buckets[hashedKey].contains(key)) {
+      const index = buckets[hashedKey].find(key);
+      buckets[hashedKey].removeAt(index);
+      if (buckets[hashedKey].size() === 0) {
+        buckets[hashedKey] = null;
+      }
+      return true;
+    }
+    return false;
+  }
+
+  function length() {
+    let num = 0;
+    for (let i = 0; i < capacity; i++) {
+      if (buckets[i]) {
+        num += buckets[i].size();
+      }
+    }
+    return num;
+  }
+
+  function clear() {
+    for (let i = 0; i < capacity; i++) {
+      buckets[i] = null;
+    }
+  }
+
+  function keys() {
+    let keysArray = [];
+    for (let i = 0; i < capacity; i++) {
+      if (buckets[i]) {
+        let currentNode = buckets[i].head();
+        while (currentNode !== null) {
+          keysArray.push(currentNode.value.key);
+          currentNode = currentNode.nextNode;
+        }
+      }
+    }
+    return keysArray;
+  }
+
+  function values() {
+    let valuesArray = [];
+    for (let i = 0; i < capacity; i++) {
+      if (buckets[i]) {
+        let currentNode = buckets[i].head();
+        while (currentNode !== null) {
+          valuesArray.push(currentNode.value.value);
+          currentNode = currentNode.nextNode;
+        }
+      }
+    }
+    return valuesArray;
+  }
+
+  function entries() {
+    let entriesArray = [];
+    for (let i = 0; i < capacity; i++) {
+      if (buckets[i]) {
+        let currentNode = buckets[i].head();
+        while (currentNode !== null) {
+          entriesArray.push([currentNode.value.key, currentNode.value.value]);
+          currentNode = currentNode.nextNode;
+        }
+      }
+    }
+    return entriesArray;
+  }
+
+  return { set, get, has, remove, length, clear, keys, values, entries };
 }
