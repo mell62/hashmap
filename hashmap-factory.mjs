@@ -60,6 +60,9 @@ function hashMap() {
 
   function get(key) {
     const hashedKey = hash(key);
+    if (hashedKey < 0 || hashedKey >= capacity) {
+      throw new Error("Trying to access index out of bound");
+    }
     if (!buckets[hashedKey]) {
       return null;
     }
@@ -72,6 +75,9 @@ function hashMap() {
 
   function has(key) {
     const hashedKey = hash(key);
+    if (hashedKey < 0 || hashedKey >= capacity) {
+      throw new Error("Trying to access index out of bound");
+    }
     if (!buckets[hashedKey]) {
       return false;
     }
@@ -83,6 +89,9 @@ function hashMap() {
 
   function remove(key) {
     const hashedKey = hash(key);
+    if (hashedKey < 0 || hashedKey >= capacity) {
+      throw new Error("Trying to access index out of bound");
+    }
     if (!buckets[hashedKey]) {
       return false;
     }
