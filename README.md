@@ -21,5 +21,5 @@ Various operations like:
 
 - True hashmap behavior achieved in JavaScript
 - Collision handling techniques implemented:
-- - **Chaining**: Recursion-powered linked lists implemented so every entry in hashmap is stored as a node inside a linked list
-- - **Rehashing**: Buckets size is dynamically grown after a certain computed capacity threshold has passed
+  - **Chaining**: Recursion-powered linked lists implemented so every entry in hashmap is stored as a node inside a linked list
+  - **Rehashing**: Buckets size is dynamically grown after a certain computed capacity threshold has passed
