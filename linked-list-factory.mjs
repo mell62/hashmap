@@ -8,7 +8,6 @@ function nodeFactory() {
 
 function linkedList() {
   let headNode = null;
-  let outputString = "";
 
   function append(value) {
     let newNode = nodeFactory();
@@ -47,16 +46,6 @@ function linkedList() {
     return headNode;
   }
 
-  function tail(node = headNode) {
-    if (!headNode) {
-      return null;
-    }
-    if (!node.nextNode) {
-      return node;
-    }
-    return tail(node.nextNode);
-  }
-
   function at(index, currentIndex = 0, node = headNode) {
     if (!node) {
       return null;
@@ -65,17 +54,6 @@ function linkedList() {
       return node;
     }
     return at(index, currentIndex + 1, node.nextNode);
-  }
-
-  function pop(node = headNode) {
-    if (!node) {
-      return null;
-    }
-    if (!node.nextNode.nextNode) {
-      node.nextNode = null;
-      return;
-    }
-    return pop(node.nextNode);
   }
 
   function contains(key, node = headNode) {
@@ -129,34 +107,15 @@ function linkedList() {
     }
     return removeAt(index, node.nextNode, currentIndex + 1);
   }
-
-  function toString(currentNode = headNode) {
-    if (headNode === null) {
-      return null;
-    }
-    if (currentNode === headNode) {
-      //reset string if toString is called again after appending elements
-      outputString = "";
-    }
-    if (currentNode === null) {
-      outputString += `null`;
-      return outputString;
-    }
-    outputString += `(${currentNode.value}) -> `;
-    return toString(currentNode.nextNode);
-  }
   return {
     append,
     prepend,
     size,
     head,
-    tail,
     at,
-    pop,
     contains,
     find,
     insertAt,
     removeAt,
-    toString,
   };
 }
