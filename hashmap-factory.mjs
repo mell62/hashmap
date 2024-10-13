@@ -16,15 +16,38 @@ function hashMap() {
     return hashCode;
   }
 
+  function ifResizeNeeded() {
+    if (length() >= capacity * loadFactor) {
+      return true;
+    }
+    return false;
+  }
+
+  function resizeBuckets() {
+    const entriesArray = entries();
+    capacity *= 2;
+    buckets = [];
+    entriesArray.forEach((entry) => {
+      const key = entry[0];
+      const value = entry[1];
+      set(key, value);
+    });
+    console.log(entries());
+  }
+
   function set(key, value) {
-    const hashedKey = hash(key);
+    let hashedKey = hash(key);
+    if (ifResizeNeeded()) {
+      resizeBuckets();
+      hashedKey = hash(key);
+    }
     if (hashedKey < 0 || hashedKey >= capacity) {
       throw new Error("Trying to access index out of bound");
     }
     if (!buckets[hashedKey]) {
       buckets[hashedKey] = linkedList();
     }
-    const itemObj = { key, value };
+    const itemObj = { key: key, value: value };
     const bucket = buckets[hashedKey];
     if (bucket.contains(key)) {
       const index = bucket.find(key);
